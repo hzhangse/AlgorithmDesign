@@ -1,4 +1,4 @@
-package com.train;
+package com.train.tree;
 
 import java.util.ArrayList;
 

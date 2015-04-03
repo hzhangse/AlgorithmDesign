@@ -11,9 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.train.HeapTree;
-import com.train.LoserTree;
-import com.train.Result;
+import com.train.tree.HeapTree;
+import com.train.tree.LoserTree;
+import com.train.tree.Result;
 
 /**
  * use heapTree to split sorted file, use loserTree to merge splitted file .

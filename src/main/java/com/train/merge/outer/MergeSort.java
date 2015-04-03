@@ -16,9 +16,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
-import com.train.HeapTree;
-import com.train.LoserTree;
-import com.train.Result;
+import com.train.tree.HeapTree;
+import com.train.tree.LoserTree;
+import com.train.tree.Result;
 
 /**
  * 基于大数据量的外排序算法，分为二路归并和多路归并

@@ -1,4 +1,4 @@
-package com.train;
+package com.train.tree;
 
 public class Result implements Comparable<Result> {
 	private Integer value;
