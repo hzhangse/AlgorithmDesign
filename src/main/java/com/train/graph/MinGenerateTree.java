@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class MinGenerateTree {
 	protected static int MAX = 9;	
 	protected ArrayList<Edge> edge = new ArrayList<Edge>();
-	protected static double INFINITY = 100;// 定义无穷大
+	protected double INFINITY = 100;// 定义无穷大
 	protected double mincost = 0.0;// 最小成本
 	
 
