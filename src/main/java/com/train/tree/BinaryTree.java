@@ -11,23 +11,9 @@ import java.util.Stack; // for Stack class
 
 ////////////////////////////////////////////////////////////////
 public class BinaryTree {
-	class Node {
-		public int iData; // data item (key)
-		public double dData; // data item
-		public Node leftChild; // this node's left child
-		public Node rightChild; // this node's right child
+	
 
-		public void displayNode() // display ourself
-		{
-			System.out.print('{');
-			System.out.print(iData);
-			System.out.print(", ");
-			System.out.print(dData);
-			System.out.print("} ");
-		}
-	} // end class Node
-
-	private Node root; // first node of tree
+	protected TreeNode root; // first node of tree
 
 	// -------------------------------------------------------------
 	public BinaryTree() // constructor
@@ -36,9 +22,9 @@ public class BinaryTree {
 	} // no nodes in tree yet
 		// -------------------------------------------------------------
 
-	public Node find(int key) // find node with given key
+	public TreeNode find(int key) // find node with given key
 	{ // (assumes non-empty tree)
-		Node current = root; // start at root
+		TreeNode current = root; // start at root
 		while (current.iData != key) // while no match,
 		{
 			if (key < current.iData) // go left?
@@ -54,15 +40,15 @@ public class BinaryTree {
 		// -------------------------------------------------------------
 
 	public void insert(int id, double dd) {
-		Node newNode = new Node(); // make new node
+		TreeNode newNode = new TreeNode(); // make new node
 		newNode.iData = id; // insert data
 		newNode.dData = dd;
 		if (root == null) // no node in root
 			root = newNode;
 		else // root occupied
 		{
-			Node current = root; // start at root
-			Node parent;
+			TreeNode current = root; // start at root
+			TreeNode parent;
 			while (true) // (exits internally)
 			{
 				parent = current;
@@ -91,8 +77,8 @@ public class BinaryTree {
 
 	public boolean delete(int key) // delete node with given key
 	{ // (assumes non-empty list)
-		Node current = root;
-		Node parent = root;
+		TreeNode current = root;
+		TreeNode parent = root;
 		boolean isLeftChild = true;
 
 		while (current.iData != key) // search for node
@@ -144,7 +130,7 @@ public class BinaryTree {
 		else // two children, so replace with inorder successor
 		{
 			// get successor of node to delete (current)
-			Node successor = getSuccessor(current);
+			TreeNode successor = getSuccessor(current);
 
 			// connect parent of current to successor instead
 			if (current == root)
@@ -164,10 +150,10 @@ public class BinaryTree {
 		// returns node with next-highest value after delNode
 		// goes to right child, then right child's left descendents
 
-	private Node getSuccessor(Node delNode) {
-		Node successorParent = delNode;
-		Node successor = delNode;
-		Node current = delNode.rightChild; // go to right child
+	private TreeNode getSuccessor(TreeNode delNode) {
+		TreeNode successorParent = delNode;
+		TreeNode successor = delNode;
+		TreeNode current = delNode.rightChild; // go to right child
 		while (current != null) // until no more
 		{ // left children,
 			successorParent = successor;
@@ -203,7 +189,7 @@ public class BinaryTree {
 	}
 
 	// -------------------------------------------------------------
-	private void preOrder(Node localRoot) {
+	private void preOrder(TreeNode localRoot) {
 		if (localRoot != null) {
 			System.out.print(localRoot.iData + " ");
 			preOrder(localRoot.leftChild);
@@ -212,7 +198,7 @@ public class BinaryTree {
 	}
 
 	// -------------------------------------------------------------
-	private void inOrder(Node localRoot) {
+	private void inOrder(TreeNode localRoot) {
 		if (localRoot != null) {
 			inOrder(localRoot.leftChild);
 			System.out.print(localRoot.iData + " ");
@@ -221,7 +207,7 @@ public class BinaryTree {
 	}
 
 	// -------------------------------------------------------------
-	private void postOrder(Node localRoot) {
+	private void postOrder(TreeNode localRoot) {
 		if (localRoot != null) {
 			postOrder(localRoot.leftChild);
 			postOrder(localRoot.rightChild);
@@ -245,7 +231,7 @@ public class BinaryTree {
 				System.out.print(' ');
 
 			while (globalStack.isEmpty() == false) {
-				Node temp = (Node) globalStack.pop();
+				TreeNode temp = (TreeNode) globalStack.pop();
 				if (temp != null) {
 					System.out.print(temp.iData);
 					localStack.push(temp.leftChild);
@@ -271,6 +257,45 @@ public class BinaryTree {
 	} // end displayTree()
 		// -------------------------------------------------------------
 
+	public void displayTree(TreeNode root) {
+		Stack globalStack = new Stack();
+		globalStack.push(root);
+		int nBlanks = 32;
+		boolean isRowEmpty = false;
+		System.out
+				.println("......................................................");
+		while (isRowEmpty == false) {
+			Stack localStack = new Stack();
+			isRowEmpty = true;
+
+			for (int j = 0; j < nBlanks; j++)
+				System.out.print(' ');
+
+			while (globalStack.isEmpty() == false) {
+				TreeNode temp = (TreeNode) globalStack.pop();
+				if (temp != null) {
+					System.out.print(temp.iData);
+					localStack.push(temp.leftChild);
+					localStack.push(temp.rightChild);
+
+					if (temp.leftChild != null || temp.rightChild != null)
+						isRowEmpty = false;
+				} else {
+					System.out.print("--");
+					localStack.push(null);
+					localStack.push(null);
+				}
+				for (int j = 0; j < nBlanks * 2 - 2; j++)
+					System.out.print(' ');
+			} // end while globalStack not empty
+			System.out.println();
+			nBlanks /= 2;
+			while (localStack.isEmpty() == false)
+				globalStack.push(localStack.pop());
+		} // end while isRowEmpty is false
+		System.out
+				.println("......................................................");
+	} // end displayTree()
 	public static void main(String[] args) throws IOException {
 		int value;
 		BinaryTree theTree = new BinaryTree();
@@ -303,7 +328,7 @@ public class BinaryTree {
 			case 'f':
 				System.out.print("Enter value to find: ");
 				value = getInt();
-				BinaryTree.Node found = theTree.find(value);
+				TreeNode found = theTree.find(value);
 				if (found != null) {
 					System.out.print("Found: ");
 					found.displayNode();

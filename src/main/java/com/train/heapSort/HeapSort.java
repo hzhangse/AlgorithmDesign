@@ -54,14 +54,20 @@ public class HeapSort extends AbstractSort {
 	public void Sort(){
 		int end = array.nElems-1;
 		adjustHeap(array,end);
-		for (int i=end;i>0;i--){
-			swap(array,1,i);
-			adjustHeap(array,i-1);
+		System.out.println("init heap result:");
+		array.display();
+		for (int i=end;i>1;i--){
+			//swap(array,1,i);
+			array.swap(1, i);
+			buildHeap(array,1,i-1);
+			System.out.println("adjust heap result:");
+			array.display();
+			System.out.println("--------------");
 		}	
 	}
 	
-	public static void main(String[] args){
-		
+	
+	public static void main(String[] args){		
 		HeapSort sort = new HeapSort();
 		sort.Sort();
 		sort.array.display();
