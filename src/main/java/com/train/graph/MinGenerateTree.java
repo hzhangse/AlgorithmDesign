@@ -73,4 +73,8 @@ public class MinGenerateTree {
 	public int start;//始边
 	public int end;//终边
 	public double cost;//权重
+	
+	public String toString(){
+		return start+">>"+end+"("+cost+")";
+	}
 }

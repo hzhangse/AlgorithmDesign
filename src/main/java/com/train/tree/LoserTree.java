@@ -80,7 +80,7 @@ public class LoserTree {
 			System.out.print(tree[i] + " ");
 		System.out.println();
 		if (this.getWinner()!=-1&&leaves.get(this.getWinner()).getValue()!=-1) {
-			System.out.println(leaves.get(tree[0]).getValue());			
+			System.out.println("the winner value:"+leaves.get(tree[0]).getValue());			
 		}
 //		if (tree[0] == -1) {
 //			System.out.println(leaves.get(tree[0]).a);
@@ -95,13 +95,14 @@ public class LoserTree {
 		initResults.add(new Result(7));
 		initResults.add(new Result(4));
 		initResults.add(new Result(6));
+		initResults.add(new Result(5));
 		LoserTree tree = new LoserTree(initResults);
-		tree.leaves.get(tree.getWinner()).setValue(-1);
-		tree.adjust(tree.getWinner());
-		tree.leaves.get(tree.getWinner()).setValue(-1);
-		tree.adjust(tree.getWinner());
-		tree.leaves.get(tree.getWinner()).setValue(-1);
-		tree.adjust(tree.getWinner());
+//		tree.leaves.get(tree.getWinner()).setValue(-1);
+//		tree.adjust(tree.getWinner());
+//		tree.leaves.get(tree.getWinner()).setValue(-1);
+//		tree.adjust(tree.getWinner());
+//		tree.leaves.get(tree.getWinner()).setValue(-1);
+//		tree.adjust(tree.getWinner());
 		//tree.adjust(tree.getWinner());
 		
 	}

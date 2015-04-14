@@ -1,13 +1,26 @@
 package com.train.graph;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+/**
+ * find the shortest path
+ * 
+ * @author hzhangse
+ *
+ */
 public class DijKstraTree extends MinGenerateTree {
 	private double[] near = new double[MAX];
+	private boolean[] finished = new boolean[MAX];
 	private double cost[][] = new double[MAX][MAX];
 	private int[] parent = new int[MAX];// 标志所在的集合
+	private ArrayList<Edge> edgeList = new ArrayList<Edge>();// 目标边
+	private Map<Integer, ArrayList<Edge>> pathMap = new HashMap<Integer, ArrayList<Edge>>();// 目标边
 
 	// 初始化
 	public void init() {
@@ -35,45 +48,85 @@ public class DijKstraTree extends MinGenerateTree {
 		}
 	}
 
+	/**
+	 * computer the shortest path from node 0 to node n
+	 */
 	public void generate() {
 		
+		parent[0]=-1;
 		for (int i = 1; i < MAX; i++) {
-
 			near[i] = cost[0][i];
-		
-			
-			for (int j = 1; j < MAX; j++) {
-
-				if (j != i && cost[j][i] < INFINITY && near[j] < INFINITY) {
-					double tmp = near[j] + cost[j][i];
-					if (tmp < near[i]) {
-						near[i] = tmp;
-
-						parent[i] = j;
-					}
+			parent[i] = 0;
+		}
+		for (int k = 0; k < MAX; k++) {
+			int minIndex = -1;
+			double min = INFINITY;
+			for (int i = 1; i < MAX; i++) {				
+				if (!finished[i]&&near[i] < min) {
+					minIndex = i;
+					min = near[i];
+					
 				}
-
 			}
-			for (int j = 1; j < MAX; j++) {
-				if (i != j && near[j] < INFINITY) {
-					if (near[j] > near[i] + cost[j][i]) {
-						near[j] = near[i] + cost[j][i];
-						parent[j] = i;
+			if (minIndex != -1) {
+				finished[minIndex] = true;
+				ArrayList<Edge> lst = new ArrayList<Edge>();// 目标边
+				int index =  minIndex;
+				int parentIndex = parent[index];
+				while (parentIndex>=0){					
+					Edge edge = new Edge();
+					edge.start = parentIndex;
+					edge.end = index;
+					edge.cost = cost[parentIndex][index];
+					index =parentIndex;
+					parentIndex = parent[index];
+					
+					lst.add(edge);
+				}
+				
+				
+				pathMap.put(minIndex, lst);
+				printpath();
+				
+			}
+
+			for (int i = 1; i < MAX; i++) {
+				if (!finished[i] && cost[minIndex][i] < INFINITY) {
+					double tmp = near[minIndex] + cost[minIndex][i];
+					if (tmp < near[i]) {
+					
+						near[i] = tmp;
+						parent[i] = minIndex;
 					}
 				}
 			}
 
 		}
+
 		for (int i = 1; i < MAX; i++) {
-			String parentStr = i+ " < -- ";
+			String parentStr = i + " < -- ";
 			int parentid = i;
 			while (parent[parentid] > 0) {
-				
-				parentStr = parentStr + parent[parentid]+" <-- ";
+
+				parentStr = parentStr + parent[parentid] + " <-- ";
 				parentid = parent[parentid];
 			}
 			System.out.println("a[0][" + i + "] length:" + near[i] + " , Path:"
-					+ parentStr+0);
+					+ parentStr + 0);
+		}
+	}
+
+	public void printpath() {
+		System.out.println("-------------min path-----------");
+		for (Integer key : pathMap.keySet()) {
+			List<Edge> lst = pathMap.get(key);
+			double total = 0d;
+			for (Edge edg : lst) {
+				total = total + edg.cost;
+			}
+			System.out.println("v0>>v" + key + " path:" + lst + " total:"
+					+ total);
+
 		}
 	}
 
@@ -104,6 +157,6 @@ public class DijKstraTree extends MinGenerateTree {
 		DijKstraTree sp = new DijKstraTree();
 		sp.init();
 		sp.generate();
-		
+
 	}
 }

@@ -22,7 +22,7 @@ public class Node {
 	 * @param next	下一个节点
 	 * @param weight	节点的权值，用来表示任务完成所要花费的时间
 	 */
-	Node(Object data, Node next,int weight) {
+	public Node(Object data, Node next,int weight) {
 		this.data = data;
 		this.next = next;
 		this.weight = weight;

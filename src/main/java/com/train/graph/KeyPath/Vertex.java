@@ -6,11 +6,11 @@ public class Vertex {
 	private Object value;
 	private boolean isVisited;
 
-	Vertex(Object value) {
+	public Vertex(Object value) {
 		this.value = value;
 	}
 
-	Object value() {
+	public Object value() {
 		return value;
 	}
 

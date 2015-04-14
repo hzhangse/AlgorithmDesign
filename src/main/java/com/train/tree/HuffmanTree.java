@@ -80,7 +80,7 @@ class Node<T> implements Comparable<Node<T>> {
 	@Override
 	public String toString() {
 		return "data:" + this.data + ";weight:" + this.weight
-				+ (this.isleaf ? ";code:" + this.code.toString() : "");
+				+ (this.isleaf ? ";code:" + this.code.toString() : "")+"\n";
 	}
 
 	public int compareTo(Node<T> other) {
