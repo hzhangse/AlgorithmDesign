@@ -1,6 +1,6 @@
-package com.train.simpleSort;
+package com.train.sort.simple;
 
-import com.train.AbstractSort;
+import com.train.sort.AbstractSort;
 
 public class InsertSort extends AbstractSort {
 	
@@ -11,7 +11,7 @@ public class InsertSort extends AbstractSort {
 	}
 	protected void insertSort(int increcement){
 		int length = this.array.nElems;
-		for (int i = 1+increcement; i < length; i++) {
+		for (int i = increcement; i < length; i++) {
 			long tmp = this.array.a[i];
 			int j;
 			for ( j = i - increcement; j >= 0; j=j-increcement) {

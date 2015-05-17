@@ -1,6 +1,6 @@
-package com.train.shellSort;
+package com.train.sort.shellSort;
 
-import com.train.simpleSort.InsertSort;
+import com.train.sort.simple.InsertSort;
 
 public class ShellSort extends InsertSort {
 

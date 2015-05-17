@@ -1,7 +1,7 @@
-package com.train.quickSort;
+package com.train.sort.quickSort;
 
-import com.train.AbstractSort;
-import com.train.DataArray;
+import com.train.sort.AbstractSort;
+import com.train.sort.DataArray;
 
 public class quickSort extends AbstractSort {
 

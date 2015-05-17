@@ -1,7 +1,7 @@
-package com.train.heapSort;
+package com.train.sort.heapSort;
 
-import com.train.AbstractSort;
-import com.train.DataArray;
+import com.train.sort.AbstractSort;
+import com.train.sort.DataArray;
 
 public class HeapSort extends AbstractSort {
 

@@ -1,4 +1,5 @@
-package com.train;
+package com.train.sort;
+
 
 public abstract class AbstractSort {
 	protected int size ;

@@ -1,9 +1,9 @@
 /**
  * 
  */
-package com.train.simpleSort;
+package com.train.sort.simple;
 
-import com.train.AbstractSort;
+import com.train.sort.AbstractSort;
 
 /**
  * @author hzhangse

@@ -1,4 +1,4 @@
-package com.train;
+package com.train.sort;
 
 public class DataArray {
 	public long[] a; // ref to array a

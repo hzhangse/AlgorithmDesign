@@ -1,7 +1,7 @@
 package com.train.merge.inner;
 
-import com.train.AbstractSort;
-import com.train.DataArray;
+import com.train.sort.AbstractSort;
+import com.train.sort.DataArray;
 
 public class mergeSort extends AbstractSort {
 
