@@ -14,7 +14,7 @@ public class KeyPathGraphNew {
 	private int pos = -1;
 	private Stack<Integer> stack;// 栈
 	private Stack<Integer> restack;// 栈的备份
-	
+
 	private int vertexNum;// 结点数
 	private Node start;
 	private int edgeCount;// 记录边的个数
@@ -39,7 +39,7 @@ public class KeyPathGraphNew {
 		adjTab = new LinkedList[size];
 		stack = new Stack<Integer>();
 		restack = new Stack<Integer>();
-		
+
 		for (int i = 0; i < size; i++) {
 			adjTab[i] = new LinkedList<Node>();
 		}
@@ -76,7 +76,7 @@ public class KeyPathGraphNew {
 	 *            从被依赖的事件到到依赖的事件之间所要花费的时间
 	 */
 	void addEdge(int from, int to, int weight) {
-	
+
 		Node node = new Node(to, null, weight);
 		adjTab[from].addLast(node);
 		vertexs[to].in++;
@@ -98,8 +98,16 @@ public class KeyPathGraphNew {
 		 */
 
 		for (int i = 0; i < vertexNum; i++) {
-			System.out.println(" vertexs[" + i + "] 入度：" + vertexs[i].in);
-
+			System.out.print(" vertexs[" + i + "] 入度：" + vertexs[i].in);
+			Iterator<Node> iter = adjTab[i].iterator();
+			System.out.print("    adjTable["+i+"]:");
+			while (iter.hasNext()) {
+				Node p = iter.next();
+				int k = ((Integer) p.getData()).intValue();
+				int weight= p.getWeight();
+				System.out.print("  -->"+k+"("+weight+")");
+			}
+			System.out.println();
 			if (vertexs[i].in == 0) {
 				stack.push(i);
 				System.out.println(" vertexs[" + i + "] 进栈");
@@ -120,12 +128,10 @@ public class KeyPathGraphNew {
 			 * 取出栈顶元素，累加器加1
 			 */
 			int j = stack.pop();
-			System.out.println("弹出：" + j);
+			System.out.println("弹出：" + j+" 开始遍历 adjTable["+j+"]");
 			count++;
 			Iterator<Node> iter = adjTab[j].iterator();
-			
-			
-			 
+
 			/**
 			 * 记录当前的事件最早发生时间
 			 */
@@ -134,14 +140,17 @@ public class KeyPathGraphNew {
 			/**
 			 * 将与此节点有关的点的入度减1，若入度减为0，则入栈
 			 */
-			while (iter.hasNext() ) {
+			while (iter.hasNext()) {
+			
 				Node p = iter.next();
+				
+				System.out.println("\n	deal with:" +p );
 				int k = ((Integer) p.getData()).intValue();
 				vertexs[k].in--;
-				System.out.println("vertexs[" + k + "].in :" + vertexs[k].in);
+				System.out.println("		vertexs[" + k + "].in :" + vertexs[k].in);
 				if (vertexs[k].in == 0) {
 					stack.push(k);
-					System.out.println("进栈：" + k);
+					System.out.println("		进栈：" + k);
 				}
 				int temp = ((Integer) p.getData()).intValue();
 
@@ -155,9 +164,10 @@ public class KeyPathGraphNew {
 				 */
 				if (p.getWeight() + preweight > ve[temp]) {
 					ve[temp] = p.getWeight() + preweight;
-					System.out.println("ve[" + temp + "]=ve["+j+"]+len["+j+","+k+"]=" + ve[temp]);
+					System.out.println("		ve[" + temp + "]=ve[" + j + "]+len["
+							+ j + "," + k + "]=" + ve[temp]);
 				}
-				
+
 			}
 
 		}
@@ -200,9 +210,8 @@ public class KeyPathGraphNew {
 		 * 计算公式：vl[k] = min{vl[j]-len<vk,vj>}
 		 */
 
-		
-		for (int i=0;i<vertexNum;i++){
-			vl[i]=ve[vertexNum-1];
+		for (int i = 0; i < vertexNum; i++) {
+			vl[i] = ve[vertexNum - 1];
 		}
 		/**
 		 * 当记录原拓扑顺序的restack不为空时，则进行循环
@@ -214,27 +223,28 @@ public class KeyPathGraphNew {
 			 */
 
 			int q = restack.pop();
-			System.out.println("popup:"+q);
+			System.out.println("popup:" + q+"开始遍历 adjTable["+q+"]");
 			Iterator<Node> iter = adjTab[q].iterator();
-			
 
 			while (iter.hasNext()) {
 				Node vertex = iter.next();
-				 int weight = vertex.getWeight();		 
-				 int k = ((Integer) vertex.getData()).intValue();
-				 System.out.println("orginal vl[" + q + "]="+vl[q]);
-				 System.out.println("vl[" + q + "]=vl["+k+"]-len["+q+","+k+"]=" +( vl[k]-weight));
-				if (vl[k]-weight<vl[q]){
-					
-					vl[q]= vl[k]-weight;
-					System.out.println("result :vl[" + q + "]=vl["+k+"]-len["+q+","+k+"]=" + vl[q]);
+				int weight = vertex.getWeight();
+				int k = ((Integer) vertex.getData()).intValue();
+				System.out.println("	deal with:"+vertex);
+				System.out.println("		orginal vl[" + q + "]=" + vl[q]);
+				System.out.println("		vl[" + q + "]=vl[" + k + "]-len[" + q + ","
+						+ k + "]=" + (vl[k] - weight));
+				if (vl[k] - weight < vl[q]) {
+
+					vl[q] = vl[k] - weight;
+					System.out.println("		result :vl[" + q + "]=vl[" + k
+							+ "]-len[" + q + "," + k + "]=" + vl[q]);
 				}
-				 
+
 			}
 
 		}
 
-		
 		System.out.print("vl array result:");
 		for (int i = 0; i < vertexNum; i++)
 			System.out.print(" vl[" + i + "]:" + vl[i]);
@@ -248,21 +258,19 @@ public class KeyPathGraphNew {
 		 * 因此，应该有l[i] = vl[j] - len<vk,vj>
 		 */
 
-		
 		for (int h = 0; h < vertexNum; h++) {
 			Iterator<Node> iter = adjTab[h].iterator();
-			
-			
-				/**
-				 * 查看所有当前节点的下一个结点
-				 */
-				while (iter.hasNext()) {
-					Node begin = iter.next();
-					e[s++] = ve[h];
-					l[t++] = vl[((Integer) begin.getData())
-							.intValue()] - begin.getWeight();
-					
-				}
+
+			/**
+			 * 查看所有当前节点的下一个结点
+			 */
+			while (iter.hasNext()) {
+				Node begin = iter.next();
+				e[s++] = ve[h];
+				l[t++] = vl[((Integer) begin.getData()).intValue()]
+						- begin.getWeight();
+
+			}
 
 		}
 
@@ -275,8 +283,6 @@ public class KeyPathGraphNew {
 
 		}
 	}
-
-
 
 	/**
 	 * 
@@ -325,8 +331,8 @@ public class KeyPathGraphNew {
 	public int getKNum() {
 		return kNum;
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		/**
 		 * 测试没有回路的情况
 		 * 

@@ -12,14 +12,14 @@ import java.util.Set;
  * find the shortest path
  * 
  * @author hzhangse
- *
+ * 
  */
 public class DijKstraTree extends MinGenerateTree {
 	private double[] near = new double[MAX];
 	private boolean[] finished = new boolean[MAX];
 	private double cost[][] = new double[MAX][MAX];
 	private int[] parent = new int[MAX];// 标志所在的集合
-	private ArrayList<Edge> edgeList = new ArrayList<Edge>();// 目标边
+	// private ArrayList<Edge> edgeList = new ArrayList<Edge>();// 目标边
 	private Map<Integer, ArrayList<Edge>> pathMap = new HashMap<Integer, ArrayList<Edge>>();// 目标边
 
 	// 初始化
@@ -52,49 +52,54 @@ public class DijKstraTree extends MinGenerateTree {
 	 * computer the shortest path from node 0 to node n
 	 */
 	public void generate() {
-		
-		parent[0]=-1;
+
+		parent[0] = -1;
 		for (int i = 1; i < MAX; i++) {
 			near[i] = cost[0][i];
 			parent[i] = 0;
 		}
-		for (int k = 0; k < MAX; k++) {
+		
+		// k used to keep time of computer shortest path from each node （1..MAX）to start node （0）
+		for (int k = 1; k < MAX; k++) {
+			
 			int minIndex = -1;
 			double min = INFINITY;
-			for (int i = 1; i < MAX; i++) {				
-				if (!finished[i]&&near[i] < min) {
+			// get the index of node(minIndex) which is the shortest path start form node
+			// 0
+			for (int i = 1; i < MAX; i++) {
+				if (!finished[i] && near[i] < min) {
 					minIndex = i;
 					min = near[i];
-					
+
 				}
 			}
+			// to iterator the parent of minIndex and set the path graph and print here
 			if (minIndex != -1) {
 				finished[minIndex] = true;
 				ArrayList<Edge> lst = new ArrayList<Edge>();// 目标边
-				int index =  minIndex;
+				int index = minIndex;
 				int parentIndex = parent[index];
-				while (parentIndex>=0){					
+				while (parentIndex >= 0) {
 					Edge edge = new Edge();
 					edge.start = parentIndex;
 					edge.end = index;
 					edge.cost = cost[parentIndex][index];
-					index =parentIndex;
+					index = parentIndex;
 					parentIndex = parent[index];
-					
+
 					lst.add(edge);
 				}
-				
-				
+
 				pathMap.put(minIndex, lst);
 				printpath();
-				
+
 			}
 
+			//use current minIndex to compute shortest path that covered from 0 to each unreached node 
 			for (int i = 1; i < MAX; i++) {
 				if (!finished[i] && cost[minIndex][i] < INFINITY) {
 					double tmp = near[minIndex] + cost[minIndex][i];
 					if (tmp < near[i]) {
-					
 						near[i] = tmp;
 						parent[i] = minIndex;
 					}

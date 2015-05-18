@@ -1,8 +1,6 @@
 package com.train.graph;
 
-/*
- *功能:无向图最小生成树Prim算法实现案例
- */
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

@@ -1,21 +1,32 @@
 package com.train.sort;
 
-public class DataArray {
-	public long[] a; // ref to array a
+import java.lang.reflect.Array;
+
+
+public class DataArray<T> {
+	public T[] data; // ref to array a
 	public int nElems; // number of data items
+	private Class<T> type;
 
 	// --------------------------------------------------------------
 
-	public DataArray(int max) // constructor
+	T[] createArray(int size) {
+		 return (T[]) Array.newInstance(type, size);    
+	}
+
+	public DataArray(Class<T> type,int max) // constructor
 	{
-		a = new long[max]; // create the array
+		this.type = type;
+		data = createArray(max);
 		nElems = 0; // no items yet
 	}
 
+
+
 	// --------------------------------------------------------------
-	public void insert(long value) // put element into array
+	public void insert(T value) // put element into array
 	{
-		a[nElems] = value; // insert it
+		data[nElems] = value; // insert it
 		nElems++; // increment size
 	}
 
@@ -24,23 +35,24 @@ public class DataArray {
 	{
 		for (int j = 0; j < nElems; j++)
 			// for each element,
-			System.out.print(a[j] + " "); // display it
+			System.out.print(data[j] + " "); // display it
 		System.out.println("");
 	}
 
 	// --------------------------------------------------------------
 	public void swap(int one, int two) {
-		long temp = a[one];
-		a[one] = a[two];
-		a[two] = temp;
-		System.out.println("swap data a["+one+"]:"+a[one]+" with a["+two+"]:"+a[two]);
-		System.out.println("result:" );
+		System.out.println("swap data a[" + one + "]:" + data[one] + " with a["
+				+ two + "]:" + data[two]);
+		T temp = data[one];
+		data[one] = data[two];
+		data[two] = temp;
+		
+		System.out.println("result:");
 		this.display();
-		System.out.println("" );
+		System.out.println("");
 	}
 	// --------------------------------------------------------------
 
 	// --------------------------------------------------------------
-
 
 }

@@ -1,27 +1,25 @@
 package com.train.sort.simple;
 
-import com.train.sort.AbstractSort;
+import com.train.sort.LongDataSort;
 
-public class InsertSort extends AbstractSort {
+public class InsertSort extends LongDataSort {
+	
+		
 	
 	
-	
-	public void init(){
-		size =10;
-	}
 	protected void insertSort(int increcement){
 		int length = this.array.nElems;
 		for (int i = increcement; i < length; i++) {
-			long tmp = this.array.a[i];
+			long tmp = this.array.data[i];
 			int j;
 			for ( j = i - increcement; j >= 0; j=j-increcement) {
-				if (tmp < this.array.a[j]) {
-					this.array.a[j + increcement] = this.array.a[j];
+				if (tmp < this.array.data[j]) {
+					this.array.data[j + increcement] = this.array.data[j];
 				} else {					
 					break;
 				}
 			}
-			this.array.a[j + increcement]= tmp;
+			this.array.data[j + increcement]= tmp;
 			this.array.display();
 		}
 	}

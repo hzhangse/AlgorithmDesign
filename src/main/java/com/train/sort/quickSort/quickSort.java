@@ -1,9 +1,9 @@
 package com.train.sort.quickSort;
 
-import com.train.sort.AbstractSort;
 import com.train.sort.DataArray;
+import com.train.sort.LongDataSort;
 
-public class quickSort extends AbstractSort {
+public class quickSort extends   LongDataSort  {
 
 	public static void main(String[] args) {
 		quickSort sort = new quickSort();
@@ -11,18 +11,18 @@ public class quickSort extends AbstractSort {
 
 	}
 
-	public int partition(DataArray array, int start, int end) {
-		long tmp = array.a[start];
+	public int partition(DataArray<Long> array, int start, int end) {
+		long tmp = array.data[start];
 		int left = start;
 		int right = end;
 
 		while (left <right) {
-			while (left <right&&array.a[right] >= tmp) {
+			while (left <right&&array.data[right] >= tmp) {
 				right--;
 			}
 			array.swap(right,left);
 			
-			while (left <right&&array.a[left] <=tmp) {
+			while (left <right&&array.data[left] <=tmp) {
 				left++;
 			}
 			array.swap(left, right);
@@ -37,7 +37,7 @@ public class quickSort extends AbstractSort {
 		QSort(array,1,array.nElems-1);
 	}
 
-	public void QSort(DataArray array, int start, int end) {
+	public void QSort(DataArray<Long> array, int start, int end) {
 		if (start < end) {
 			int pivot;
 			pivot = partition(array, start, end);

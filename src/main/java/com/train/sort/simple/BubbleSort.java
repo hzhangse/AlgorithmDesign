@@ -3,17 +3,15 @@
  */
 package com.train.sort.simple;
 
-import com.train.sort.AbstractSort;
+import com.train.sort.LongDataSort;
 
 /**
  * @author hzhangse
  *
  */
-public class BubbleSort extends AbstractSort {
+public class BubbleSort extends LongDataSort {
 
-	/**
-	 * 
-	 */
+	
 	public BubbleSort() {
 		// TODO Auto-generated constructor stub
 	}
@@ -27,11 +25,13 @@ public class BubbleSort extends AbstractSort {
 	public void Sort() {
 		int size = this.array.nElems;
 		for (int j = 0; j < size; j++) {
-			for (int i = j; i<size-1;  i++) {
-				if (this.array.a[i] > this.array.a[i+1]) {
-					this.array.swap(i, i + 1);
+			
+			for (int i = size-1; i>=j+1;  i--) {
+				if (this.array.data[i] < this.array.data[i-1]) {
+					this.array.swap(i, i - 1);
 				}
 			}
+			System.out.println("outer loop "+j+":"+this.array.data[j]);
 		}
 
 	}

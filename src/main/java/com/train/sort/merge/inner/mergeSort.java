@@ -1,19 +1,12 @@
-package com.train.merge.inner;
+package com.train.sort.merge.inner;
 
-import com.train.sort.AbstractSort;
-import com.train.sort.DataArray;
+import com.train.sort.LongDataSort;
 
-public class mergeSort extends AbstractSort {
+public class mergeSort extends LongDataSort {
 
 	long[] result = new long[array.nElems + 1];
 
-	public mergeSort() {
-		array = new DataArray(20);
-
-		for (int i = 0; i < 10; i++)
-			array.insert((long) (java.lang.Math.random() * 10000));
-		array.display();
-	}
+	
 
 	private void merge(long[] workSpace, int lowBound, int mid, int upperBound) {
 
@@ -22,21 +15,21 @@ public class mergeSort extends AbstractSort {
 		
 		int j = 0;
 		while (lowPtr <= mid && upperPtr <= upperBound) {
-			if (this.array.a[lowPtr] < this.array.a[upperPtr]) {
-				workSpace[j++] = this.array.a[lowPtr++];
-			} else if (this.array.a[lowPtr] >= this.array.a[upperPtr]) {
-				workSpace[j++] = this.array.a[upperPtr++];
+			if (this.array.data[lowPtr] < this.array.data[upperPtr]) {
+				workSpace[j++] = this.array.data[lowPtr++];
+			} else if (this.array.data[lowPtr] >= this.array.data[upperPtr]) {
+				workSpace[j++] = this.array.data[upperPtr++];
 			}
 		}
 		while (lowPtr <= mid) {
-			workSpace[j++] = this.array.a[lowPtr++];
+			workSpace[j++] = this.array.data[lowPtr++];
 		}
 		while (upperPtr <= upperBound) {
-			workSpace[j++] = this.array.a[upperPtr++];
+			workSpace[j++] = this.array.data[upperPtr++];
 		}
 
 		for (int k = 0; k < j ; k++){
-			this.array.a[lowBound + k] = workSpace[k];
+			this.array.data[lowBound + k] = workSpace[k];
 			
 		}
 
@@ -44,7 +37,7 @@ public class mergeSort extends AbstractSort {
 			if (k==lowBound){
 				System.out.print("[ ");
 			}
-			System.out.print(" " + array.a[k]);
+			System.out.print(" " + array.data[k]);
 			if (k==lowBound+j-1){
 				System.out.print(" ]");
 			}

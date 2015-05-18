@@ -3,6 +3,9 @@ package com.train.graph;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/*
+ *功能:无向图最小生成树Prim算法实现案例
+ */
 public class PrimMinGenerateTree extends MinGenerateTree {
 	// near 数组每个记录表示 其他未到达节点 到 已选出的最优路径节点集 的 最佳方案。 比如near[3]=7,表示
 	// 节点3到已选中节点（比如有，4，7）最短的方式是 3->7.
@@ -75,12 +78,12 @@ public class PrimMinGenerateTree extends MinGenerateTree {
 				near[i] = q;
 			}
 		}
-		near[p] = near[q] = -1;
+		near[p] = near[q] = -1;// set -1, means the node will not be used to compute
 		// 找剩下的n-2条边
 		for (int i = 1; i < MAX; i++) {
 			double min = INFINITY;
 			tmp = new Edge();
-			// cost[j][near[j]] 表示 j 节点对应的最短路径
+			// cost[j][near[j]] 表示 j 节点到最小边集合对应的最短路径
 			// 遍历所有节点的最小路径，并筛选出其中的最小边。
 			for (int j = 0; j < MAX; j++) {
 				if (near[j] != -1 && cost[j][near[j]] < min) {
@@ -95,7 +98,7 @@ public class PrimMinGenerateTree extends MinGenerateTree {
 				edge.add(tmp);
 				System.out.println(" start:" + tmp.start + "--- end:"
 						+ tmp.end + " cost:" + tmp.cost);
-				near[tmp.start] = -1;
+				near[tmp.start] = -1; // set -1, means the node will not be used to compute
 
 				// 根据新找出的最短路径节点（tmp.start），重新计算near数组.
 				for (int k = 0; k < MAX; k++) {

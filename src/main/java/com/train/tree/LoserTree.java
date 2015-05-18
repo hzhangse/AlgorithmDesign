@@ -1,8 +1,8 @@
 package com.train.tree;
 
 /*
- * ResultSet.java     0.0.1 2013/04/04 
- * Copyright(C) 2013 db-iir RUC. All rights reserved. 
+ * Zhang Hong
+ * 
  */
 import java.util.ArrayList;
 

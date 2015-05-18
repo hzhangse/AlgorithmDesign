@@ -1,21 +1,16 @@
 package com.train.sort;
 
 
-public abstract class AbstractSort {
-	protected int size ;
+public abstract class AbstractSort<T> {
 	
-	public void init(){
-		size =7;
-	}
+	
+	abstract public void init();
+	
 	public AbstractSort(){
 		init();
-		array = new DataArray(20);
-		array.insert(0);
-		for (int i=0;i<size;i++)
-		array.insert((long)(java.lang.Math.random()*10000));
-		array.display();
+	
 	}
-    protected DataArray array;
+    protected DataArray<T> array;
 	
 	abstract public void Sort();
 }

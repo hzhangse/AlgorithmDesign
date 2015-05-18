@@ -82,6 +82,8 @@ public class Node {
 		this.weight = weight;
 	}
 	
-	
+	public String toString(){
+		return  " to:"+this.data +" weight:"+this.weight;
+	}
 
 }
