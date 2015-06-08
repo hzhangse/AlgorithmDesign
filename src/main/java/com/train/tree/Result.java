@@ -28,5 +28,18 @@ public class Result implements Comparable<Result> {
 		}
 		return result;
 	}
+	
+	public int compareTo(Result o,boolean inverse) {
+		if (inverse){
+			return -1* this.compareTo(o);
+		}else{
+			return this.compareTo(o);
+		}
+		
+		
+	}
 
+	public String toString(){
+		return value.toString();
+	}
 }

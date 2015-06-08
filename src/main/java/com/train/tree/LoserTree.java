@@ -11,17 +11,35 @@ import java.util.ArrayList;
  * 
  */
 public class LoserTree {
-	private int[] tree = null;// 以顺序存储方式保存所有非叶子结点
+
+	class LoserTreeNode<T> {
+		int index;
+		T value;
+
+		LoserTreeNode(int index, T value) {
+			this.index = index;
+			this.value = value;
+		}
+
+		public String toString() {
+			if (value.toString().equalsIgnoreCase("-1"))
+				return "-1";
+			return "tree[" + index + "]:" + value;
+		}
+	}
+
+	private Integer[] tree = null;// 以顺序存储方式保存所有非叶子结点
 	private int size = 0;
 	private ArrayList<Result> leaves = null;// 叶子节点
 
 	public LoserTree(ArrayList<Result> initResults) {
 		this.leaves = initResults;
 		this.size = initResults.size();
-		this.tree = new int[size];
+		this.tree = new Integer[size];
 		for (int i = 0; i < size; ++i) {
-			tree[i] = -1;
+			tree[i] = -1;// -1 means max value
 		}
+		// adjust from the end leave node to 0
 		for (int i = size - 1; i >= 0; --i) {
 			adjust(i);
 		}
@@ -31,7 +49,7 @@ public class LoserTree {
 	public void del(int s) {
 		leaves.remove(s);
 		size--;
-		tree = new int[size];
+		tree = new Integer[size];
 		for (int i = 0; i < size; ++i) {
 			tree[i] = -1;
 		}
@@ -54,38 +72,64 @@ public class LoserTree {
 		return tree[0];
 	}
 
-	public void adjust(int s) {
+	public void adjust(int current) {
 		// s指向当前的值最小的叶子结点（胜者）
-		int t = (s + size) / 2;// t是s的双亲
+		int parent = (current + size) / 2;// t是s的双亲
 
-		while (t > 0) {
+		while (parent > 0) {
 
-			if (s >= 0 && tree[t] == -1) {
+			if (current >= 0 && tree[parent] == -1) {
 				// 将树中的当前结点指向其子树中值最小的叶子
-				int tmp = s;
-				s = tree[t];
-				tree[t] = tmp;
+				int tmp = current;
+				current = tree[parent];
+				tree[parent] = tmp;
 			}
-			if (s >= 0 && leaves.get(s).compareTo(leaves.get(tree[t])) > 0) {
+			if (current >= 0 && leaves.get(current).compareTo(leaves.get(tree[parent])) > 0) {
 				// 将树中的当前结点指向其子树中值最小的叶子
-				int tmp = s;
-				s = tree[t];
-				tree[t] = tmp;
+				int tmp = current;
+				current = tree[parent];
+				tree[parent] = tmp;
 			}
 
-			t /= 2;
+			parent /= 2;
 		}
-		tree[0] = s;// 树根指向胜者
-		for (int i = 0; i < tree.length; i++)
-			System.out.print(tree[i] + " ");
-		System.out.println();
-		if (this.getWinner()!=-1&&leaves.get(this.getWinner()).getValue()!=-1) {
-			System.out.println("the winner value:"+leaves.get(tree[0]).getValue());			
+		tree[0] = current;// 树根指向胜者
+		// for (int i = 0; i < tree.length; i++)
+		// System.out.print(tree[i] + " ");
+		// System.out.println();
+		display();
+		if (this.getWinner() != -1
+				&& leaves.get(this.getWinner()).getValue() != -1) {
+			System.out.println("the winner is tree["+tree[0]+"]:"
+					+ leaves.get(tree[0]).getValue());
 		}
-//		if (tree[0] == -1) {
-//			System.out.println(leaves.get(tree[0]).a);
-//			//leaves.get(tree[0]).a = -1;
-//		}
+		// if (tree[0] == -1) {
+		// System.out.println(leaves.get(tree[0]).a);
+		// //leaves.get(tree[0]).a = -1;
+		// }
+	}
+
+	public void display() // displays array contents
+	{
+		LoserTreeNode<Result>[] losetreeArr =  new LoserTreeNode[tree.length-1];
+		for (int j = 0; j < tree.length; j++) {
+			
+			System.out.print(tree[j] + " "); // display it
+		}
+		for (int j = 0; j < tree.length-1; j++) {
+			Result result = new Result(tree[j+1]);
+			if (result.getValue()!=-1){
+				result = this.leaves.get(result.getValue());
+			}
+			LoserTreeNode<Result> node = new LoserTreeNode<Result>(tree[j+1],result);
+			losetreeArr[j] = node;
+			
+			
+		}
+		System.out.println("");
+
+		CommonTree losetree = new CommonTree(losetreeArr);
+		losetree.displayTree();
 	}
 
 	public static void main(String[] args) {
@@ -97,13 +141,13 @@ public class LoserTree {
 		initResults.add(new Result(6));
 		initResults.add(new Result(5));
 		LoserTree tree = new LoserTree(initResults);
-//		tree.leaves.get(tree.getWinner()).setValue(-1);
-//		tree.adjust(tree.getWinner());
-//		tree.leaves.get(tree.getWinner()).setValue(-1);
-//		tree.adjust(tree.getWinner());
-//		tree.leaves.get(tree.getWinner()).setValue(-1);
-//		tree.adjust(tree.getWinner());
-		//tree.adjust(tree.getWinner());
-		
+		// tree.leaves.get(tree.getWinner()).setValue(-1);
+		// tree.adjust(tree.getWinner());
+		// tree.leaves.get(tree.getWinner()).setValue(-1);
+		// tree.adjust(tree.getWinner());
+		// tree.leaves.get(tree.getWinner()).setValue(-1);
+		// tree.adjust(tree.getWinner());
+		// tree.adjust(tree.getWinner());
+
 	}
 }
